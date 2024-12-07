@@ -1,6 +1,7 @@
 import { AtpAgent } from "npm:@atproto/api";
 import "jsr:@std/dotenv/load";
 import { DOMParser } from "jsr:@b-fuze/deno-dom";
+import { decode } from "npm:imagescript";
 
 const dateObj = new Date();
 const month = dateObj.getUTCMonth() + 1;
@@ -35,9 +36,11 @@ async function main() {
       password: Deno.env.get("BLUESKY_PASSWORD")!,
     });
 
-    const blobResp = await agent.uploadBlob(imageBlob);
+    const panel = decode(await imageBlob.arrayBuffer());
+    const w = (await panel).width;
+    const h = (await panel).height;
 
-    console.log(blobResp);
+    const blobResp = await agent.uploadBlob(imageBlob);
 
     await agent.post({
       text: text,
@@ -46,6 +49,10 @@ async function main() {
         images: [{
           image: blobResp.data.blob,
           alt: text,
+          aspectRatio: {
+            width: w,
+            height: h,
+          },
         }],
       },
     });
