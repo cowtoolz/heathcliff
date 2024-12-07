@@ -21,7 +21,11 @@ async function main() {
     const html = await response.text();
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html")!;
-    const text = doc.querySelector(".gc-container h1")!.innerText.trim();
+    const text =
+      `${random ? "From the Heathcliff archive! " : "Today's Heathcliff, "}` +
+      doc.querySelector(
+        "input.cal",
+      )!.getAttribute("placeholder")!.trim();
     const imageTag = doc.querySelector(".item-comic-image img")!;
     const imageUrl = imageTag.getAttribute("src")!;
     const imageResponse = await fetch(imageUrl);
