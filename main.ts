@@ -7,11 +7,15 @@ const month = dateObj.getUTCMonth() + 1;
 const day = dateObj.getUTCDate();
 const year = dateObj.getUTCFullYear();
 
+const random: boolean = !!Deno.env.get("RANDOM")!;
+
+const fetchUrl = random
+  ? `https://www.gocomics.com/random/heathcliff `
+  : `https://www.gocomics.com/heathcliff/${year}/${month}/${day}`;
+
 async function main() {
   try {
-    const response = await fetch(
-      `https://www.gocomics.com/heathcliff/${year}/${month}/${day}`,
-    );
+    const response = await fetch(fetchUrl);
 
     const html = await response.text();
     const parser = new DOMParser();

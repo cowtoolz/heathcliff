@@ -1,0 +1,26 @@
+name: Randoms from the archive
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0,10,16 * * *"
+
+jobs:
+  toil:
+    runs-on: ubuntu-latest
+    environment: main
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v2.x
+
+      - name: Post
+        env:
+          BLUESKY_USERNAME: ${{ secrets.BLUESKY_USERNAME }}
+          BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+        run: |
+          RANDOM=1 deno task post
