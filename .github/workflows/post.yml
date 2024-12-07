@@ -1,4 +1,4 @@
-name: Today's Heathcliff
+name: Heathcliff!
 
 on:
   workflow_dispatch:
@@ -24,3 +24,4 @@ jobs:
           BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
         run: |
           deno task post
+          
