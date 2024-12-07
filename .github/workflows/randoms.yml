@@ -3,7 +3,7 @@ name: Randoms from the archive
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0,10,17 * * *"
+    - cron: "0 11,17,22 * * *"
 
 jobs:
   toil:
